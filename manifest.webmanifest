@@ -1,0 +1,13 @@
+{
+  "name": "Bible Chronicles",
+  "short_name": "Bible Chronicles",
+  "description": "Aventura bíblica interactiva",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "orientation": "landscape",
+  "background_color": "#07111b",
+  "theme_color": "#07131e",
+  "lang": "es"
+}
