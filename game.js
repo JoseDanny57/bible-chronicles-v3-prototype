@@ -42,7 +42,6 @@ class PrototypeScene extends Phaser.Scene{
  preload(){
   this.load.image('bg',ASSET_BASE+'assets/ui/Cain_Abel_Objetos.png');
   this.load.image('clean',ASSET_BASE+'assets/ui/Cain_Abel_Limpia.png');
-  this.load.image('traveler',ASSET_BASE+'assets/characters/adrian-expedicion.png');
   this.load.audio('ambience',ASSET_BASE+'assets/audio/ambiente-cain-abel.mp3');
  }
  create(){
@@ -52,8 +51,6 @@ class PrototypeScene extends Phaser.Scene{
   this.physics.world.setBounds(0,0,worldW,worldH);
   this.add.image(0,0,'bg').setOrigin(0).setDisplaySize(worldW,worldH);
   this.revealLayers=[];
-  this.traveler=this.add.image(410,690,'traveler').setOrigin(.5,1).setScale(.28).setDepth(5);
-  this.targetPos={x:this.traveler.x,y:this.traveler.y};
 
   this.objectZones=objects.map(o=>{
     const z=this.add.zone(o.x,o.y,o.r*2,o.r*2).setInteractive({useHandCursor:true});
@@ -75,23 +72,13 @@ class PrototypeScene extends Phaser.Scene{
       cam.setScroll(this.dragStart.camX-dx/cam.zoom,this.dragStart.camY-dy/cam.zoom);
     }
   });
-  this.input.on('pointerup',p=>{
-    if(!this.dragStart)return;
-    if(!this.dragStart.moved){
-      const w=p.positionToCamera(this.cameras.main);
-      if(!this.objectZones.some(z=>Phaser.Geom.Rectangle.Contains(z.getBounds(),w.x,w.y))){
-        this.targetPos={x:Phaser.Math.Clamp(w.x,80,1450),y:Phaser.Math.Clamp(w.y,430,820)};
-        say('El viajero se dirige al punto indicado.');
-      }
-    }
-    this.dragStart=null;
-  });
+  this.input.on('pointerup',()=>{ this.dragStart=null; });
 
   this.input.on('wheel',(pointer,gos,dx,dy)=>{
     this.setZoom(this.cameras.main.zoom-(dy>0?.1:-.1));
   });
   ambient=this.sound.add('ambience',{loop:true,volume:.22});
-  if(state.sound)ambient.play();
+  if(state.sound && document.getElementById('presentation')?.hidden)ambient.play();
   this.setZoom(1);
  }
 
@@ -116,18 +103,18 @@ class PrototypeScene extends Phaser.Scene{
   this.cameras.main.setZoom(z);
   el('zoomReset').textContent=Math.round(z*100)+'%';
  }
- update(){
-  if(!this.traveler||!this.targetPos)return;
-  const dx=this.targetPos.x-this.traveler.x,dy=this.targetPos.y-this.traveler.y,d=Math.hypot(dx,dy);
-  if(d>3){
-    const speed=2.7;
-    this.traveler.x+=dx/d*speed;this.traveler.y+=dy/d*speed;
-    this.traveler.setFlipX(dx<0);
-  }
- }
+ update(){}
 }
 const config={type:Phaser.AUTO,parent:'game',backgroundColor:'#111',physics:{default:'arcade'},scale:{mode:Phaser.Scale.RESIZE,autoCenter:Phaser.Scale.CENTER_BOTH},scene:PrototypeScene};
 new Phaser.Game(config);
+
+const presentation=el('presentation');
+const startScene=el('startScene');
+if(startScene)startScene.addEventListener('click',()=>{
+  presentation.hidden=true;
+  say('Explora la escena, encuentra los objetos y recógelos.');
+  if(sceneRef&&ambient&&state.sound&&!ambient.isPlaying)ambient.play();
+});
 
 el('zoomIn').addEventListener('click',()=>sceneRef&&sceneRef.setZoom(sceneRef.cameras.main.zoom+.15));
 el('zoomOut').addEventListener('click',()=>sceneRef&&sceneRef.setZoom(sceneRef.cameras.main.zoom-.15));
