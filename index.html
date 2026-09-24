@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#07131e">
+  <title>Bible Chronicles V3 — Prototipo</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.min.js"></script>
+</head>
+<body>
+  <main id="app">
+    <header class="topbar">
+      <div>
+        <strong>BIBLE CHRONICLES</strong>
+        <span>V3 · Prototipo jugable</span>
+      </div>
+      <div class="scene-title">Los Orígenes · Caín y Abel</div>
+    </header>
+
+    <section class="game-shell">
+      <div id="game"></div>
+
+      <aside class="hud" aria-label="Panel de juego">
+        <section class="score-grid">
+          <div class="metric"><span>PUNTAJE</span><b id="score">0</b></div>
+          <div class="metric"><span>ESTRELLAS</span><b id="stars">☆☆☆</b></div>
+        </section>
+
+        <section>
+          <h2>OBJETOS A BUSCAR</h2>
+          <div id="targets" class="targets"></div>
+        </section>
+
+        <button id="hintBtn" class="primary" type="button">💡 PISTA</button>
+
+        <section>
+          <h2>INVENTARIO</h2>
+          <div id="inventory" class="inventory"><span class="empty">Vacío</span></div>
+        </section>
+
+        <div id="status" class="status" aria-live="polite">Toca el terreno para caminar. Arrastra para explorar y usa +/− para acercarte.</div>
+
+        <div class="controls">
+          <button id="zoomOut" type="button" aria-label="Alejar">−</button>
+          <button id="zoomReset" type="button">100%</button>
+          <button id="zoomIn" type="button" aria-label="Acercar">+</button>
+        </div>
+
+        <button id="soundBtn" type="button">🔊 SONIDO</button>
+        <button id="resetBtn" type="button">↻ REINICIAR PRUEBA</button>
+      </aside>
+    </section>
+
+    <div id="complete" class="modal" hidden>
+      <div class="card">
+        <div class="big-stars">★★★</div>
+        <h1>¡Escena completada!</h1>
+        <p>Encontraste todos los objetos de esta prueba.</p>
+        <strong id="finalScore">0 puntos</strong>
+        <button id="playAgain" type="button">JUGAR DE NUEVO</button>
+      </div>
+    </div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
