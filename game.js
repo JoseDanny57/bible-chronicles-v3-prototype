@@ -29,7 +29,8 @@ function ping(){
 }
 function foundObject(obj){
  if(state.found.has(obj.id))return;
- state.found.add(obj.id);state.score+=100;ping();render();say(obj.name+' encontrado. +100 puntos');
+ if(sceneRef)sceneRef.collectObject(obj);
+ state.found.add(obj.id);state.score+=100;ping();render();say(obj.name+' recogido y guardado en el inventario. +100 puntos');
  if(hintRing){hintRing.destroy();hintRing=null}
  if(state.found.size===objects.length){
    state.score+=200;render();el('finalScore').textContent=state.score+' puntos';
@@ -40,6 +41,7 @@ class PrototypeScene extends Phaser.Scene{
  constructor(){super('prototype')}
  preload(){
   this.load.image('bg',ASSET_BASE+'assets/ui/Cain_Abel_Objetos.png');
+  this.load.image('clean',ASSET_BASE+'assets/ui/Cain_Abel_Limpia.png');
   this.load.image('traveler',ASSET_BASE+'assets/characters/adrian-expedicion.png');
   this.load.audio('ambience',ASSET_BASE+'assets/audio/ambiente-cain-abel.mp3');
  }
@@ -49,6 +51,7 @@ class PrototypeScene extends Phaser.Scene{
   this.cameras.main.setBounds(0,0,worldW,worldH);
   this.physics.world.setBounds(0,0,worldW,worldH);
   this.add.image(0,0,'bg').setOrigin(0).setDisplaySize(worldW,worldH);
+  this.revealLayers=[];
   this.traveler=this.add.image(410,690,'traveler').setOrigin(.5,1).setScale(.28).setDepth(5);
   this.targetPos={x:this.traveler.x,y:this.traveler.y};
 
@@ -91,6 +94,23 @@ class PrototypeScene extends Phaser.Scene{
   if(state.sound)ambient.play();
   this.setZoom(1);
  }
+
+ collectObject(obj){
+  const maskShape=this.make.graphics({x:0,y:0,add:false});
+  maskShape.fillStyle(0xffffff,1);
+  maskShape.fillCircle(obj.x,obj.y,obj.r*1.28);
+  const cleanLayer=this.add.image(0,0,'clean').setOrigin(0).setDisplaySize(1536,864).setDepth(2).setAlpha(0);
+  cleanLayer.setMask(maskShape.createGeometryMask());
+  this.revealLayers.push({cleanLayer,maskShape});
+  this.tweens.add({targets:cleanLayer,alpha:1,duration:260,ease:'Sine.easeOut'});
+
+  const zone=this.objectZones&&this.objectZones.find(z=>z.getData('obj')&&z.getData('obj').id===obj.id);
+  if(zone)zone.disableInteractive();
+
+  const token=this.add.circle(obj.x,obj.y,18,0xffd45a,1).setStrokeStyle(4,0xfff3b0,1).setDepth(12);
+  const label=this.add.text(obj.x,obj.y-34,obj.name,{fontFamily:'Georgia',fontSize:'24px',color:'#fff1bd',stroke:'#000000',strokeThickness:4}).setOrigin(.5).setDepth(12);
+  this.tweens.add({targets:[token,label],x:1450,y:90,scale:.25,alpha:.15,duration:650,ease:'Cubic.easeIn',onComplete:()=>{token.destroy();label.destroy();}});
+ }
  setZoom(z){
   z=Phaser.Math.Clamp(z,.85,1.8);
   this.cameras.main.setZoom(z);
@@ -127,8 +147,9 @@ el('soundBtn').addEventListener('click',()=>{
  if(ambient){if(state.sound&&!ambient.isPlaying)ambient.play();else if(!state.sound)ambient.stop()}
 });
 function reset(){
- state.found.clear();state.score=0;state.hints=2;completeEl.hidden=true;render();say('Prueba reiniciada. Encuentra los tres objetos.');
- if(sceneRef){sceneRef.traveler.setPosition(410,690);sceneRef.targetPos={x:410,y:690};sceneRef.setZoom(1);sceneRef.cameras.main.setScroll(0,0)}
+ state.found.clear();state.score=0;state.hints=2;completeEl.hidden=true;render();say('Prueba reiniciada. Encuentra y recoge los tres objetos.');
+ if(ambient){try{ambient.stop()}catch(e){}}
+ if(sceneRef)sceneRef.scene.restart();
 }
 el('resetBtn').addEventListener('click',reset);
 el('playAgain').addEventListener('click',reset);
