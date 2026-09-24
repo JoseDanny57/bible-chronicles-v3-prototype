@@ -1,0 +1,9 @@
+{
+  "name": "bible-chronicles-v3",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "firebase-admin": "^13.4.0"
+  }
+}
