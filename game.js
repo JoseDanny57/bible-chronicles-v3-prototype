@@ -1,5 +1,5 @@
 (()=>{
-const ASSET_BASE='https://raw.githubusercontent.com/JoseDanny57/bible-chronicles-v2/main/';
+const ASSET_BASE='./';
 const objects=[
  {id:'semillas',name:'Semillas',x:96,y:320,r:52},
  {id:'canasta',name:'Canasta',x:225,y:705,r:82},
