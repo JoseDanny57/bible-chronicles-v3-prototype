@@ -1,85 +1,75 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-  <meta name="theme-color" content="#07131e">
-  <title>Bible Chronicles V3</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#07121b">
+<meta name="description" content="Bible Chronicles V3 — Journey Through the Scriptures">
+<title>Bible Chronicles — Journey Through the Scriptures</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05090d;color:#ead6aa;font-family:Georgia,"Times New Roman",serif}button,input{font:inherit}
+.screen{position:fixed;inset:0;width:100vw;height:100dvh;background:#05090d url('https://bible-chronicles-v2.vercel.app/assets/ui/portada-inicio.png?v=3') center/100% 100% no-repeat}
+.hotspot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:14px;color:transparent;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.hotspot:focus-visible{outline:3px solid #f4c875;outline-offset:3px}
+.new{left:34%;top:41%;width:31%;height:9%}.continue{left:34%;top:52%;width:31%;height:9%}.settings{left:34%;top:63%;width:31%;height:9%}
+.sound{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));width:44px;height:44px;border:1px solid #b88b47;border-radius:50%;background:#17140ee8;color:#f2d58b;display:grid;place-items:center;cursor:pointer;z-index:4}
+.auth{position:fixed;inset:0;display:grid;grid-template-columns:62% 38%;background:#080705;z-index:8}.auth[hidden],.ready[hidden],.settings-panel[hidden]{display:none}
+.cover{border-right:1px solid #6d4a24;background:#080705 url('https://bible-chronicles-v2.vercel.app/assets/ui/portada-inicio.png?v=3') center/cover no-repeat}
+.side{display:flex;align-items:center;justify-content:center;padding:clamp(14px,2.4vw,34px);background:radial-gradient(circle at 50% 45%,#17120c,#070604 72%)}
+.card{width:100%;max-width:560px;padding:clamp(20px,3vw,34px);border:1px solid #8b5d2c;border-radius:22px;background:rgba(12,10,8,.94);box-shadow:0 18px 55px #0008}
+.brand{margin:0 0 8px;color:#d59b43;font:bold clamp(15px,1.5vw,22px) Georgia,serif;letter-spacing:.14em}.card h1{margin:0 0 8px;color:#f1d29a;font:700 clamp(28px,3.2vw,47px) Georgia,serif}.intro{margin:0 0 20px;color:#d5c8b5;font:clamp(13px,1.25vw,18px) Arial,sans-serif;line-height:1.35}
+.field{margin:12px 0;text-align:left;font-family:Arial,sans-serif}.field label{display:block;margin:0 0 6px;color:#c89954;font-size:12px;font-weight:700;letter-spacing:.08em}.input-row{display:flex;gap:6px}.field input{width:100%;padding:13px 14px;border:1px solid #6f4c28;border-radius:12px;background:#0d0b08;color:#fff1d2;font-size:16px;outline:none}.field input:focus{border-color:#d59b43}.eye{width:48px;border:1px solid #6f4c28;border-radius:12px;background:#15110c;color:#e8c47f}
+.primary,.secondary{width:100%;min-height:52px;margin:6px 0;border:1px solid #a66f29;border-radius:14px;font-weight:700;cursor:pointer}.primary{background:linear-gradient(#d89a2d,#9a5d0e);color:#fff4dc}.secondary{background:#15110c;color:#f5dfba}.message{min-height:22px;margin-top:8px;color:#e5a27e;font:13px Arial,sans-serif}.recover-link{display:inline-block;margin-top:8px;color:#d7b16e;background:none;border:0;text-decoration:underline;cursor:pointer}
+.ready,.settings-panel{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:#05090ddd;padding:20px}.ready .card,.settings-panel .card{text-align:center;max-width:520px}.rotate{display:none}
+@media(pointer:coarse){.auth{grid-template-columns:56% 44%}.side{padding:max(8px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) 12px}.card{max-height:calc(100dvh - 16px);overflow:auto;padding:clamp(12px,2vw,20px)}.field{margin:7px 0}.field input{padding:9px 11px}.primary,.secondary{min-height:42px}}
+@media(max-height:520px) and (orientation:landscape){.card h1{font-size:22px}.intro{font-size:11px;margin-bottom:7px}.field{margin:4px 0}.field input{padding:6px 9px}.primary,.secondary{min-height:34px;margin:3px 0;font-size:12px}}
+@media(orientation:portrait){.screen,.auth,.ready,.settings-panel{display:none!important}.rotate{display:flex;position:fixed;inset:0;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:2rem;color:#f4d99c;background:radial-gradient(circle at 50% 35%,#17314a,#05090d 65%)}.device{width:55px;height:90px;border:4px solid #d8ad62;border-radius:10px;margin-bottom:1rem;animation:turn 1.8s ease-in-out infinite alternate}@keyframes turn{to{transform:rotate(90deg)}}}
+</style>
 </head>
 <body>
-  <main id="app">
-    <header class="topbar">
-      <div>
-        <strong>BIBLE CHRONICLES</strong>
-        <span>V3 · Base técnica</span>
-      </div>
-      <div class="scene-title">Los Orígenes · Caín y Abel</div>
-    </header>
-
-    <section class="presentation" id="presentation" aria-label="Presentación de la escena">
-      <div class="presentation-bg"></div>
-      <div class="presenter-wrap">
-        <img class="presenter" src="https://bible-chronicles-v2.vercel.app/assets/characters/adrian-presentador-aprobado.webp" alt="Profesor Adrián presentando la escena">
-      </div>
-      <div class="presentation-copy">
-        <h1>CAÍN Y ABEL</h1>
-        <div class="presentation-card">
-          <p>Después de ser expulsados del Edén, Adán y Eva comenzaron una nueva vida fuera del jardín.</p>
-          <p>Con el tiempo nacieron sus hijos, Caín y Abel. Caín se convirtió en labrador de la tierra, mientras Abel fue pastor de ovejas.</p>
-          <p>Llegado el momento, ambos presentaron una ofrenda a Dios. Lo que ocurrió después cambiaría para siempre la historia de esta familia.</p>
-        </div>
-        <button id="startScene" class="start-scene" type="button">CONTINUAR</button>
-      </div>
-    </section>
-
-    <section class="game-shell">
-      <div id="game"></div>
-
-      <aside class="hud" aria-label="Panel de juego">
-        <section class="score-grid">
-          <div class="metric"><span>PUNTAJE</span><b id="score">0</b></div>
-          <div class="metric"><span>ESTRELLAS</span><b id="stars">☆☆☆</b></div>
-        </section>
-
-        <section>
-          <h2>OBJETOS A BUSCAR</h2>
-          <div id="targets" class="targets"></div>
-        </section>
-
-        <button id="hintBtn" class="primary" type="button">💡 PISTA</button>
-
-        <section>
-          <h2>INVENTARIO</h2>
-          <div id="inventory" class="inventory"><span class="empty">Vacío</span></div>
-        </section>
-
-        <div id="status" class="status" aria-live="polite">Arrastra la escena para explorar y usa +/− para acercarte.</div>
-
-        <div class="controls">
-          <button id="zoomOut" type="button" aria-label="Alejar">−</button>
-          <button id="zoomReset" type="button">100%</button>
-          <button id="zoomIn" type="button" aria-label="Acercar">+</button>
-        </div>
-
-        <button id="soundBtn" type="button">🔊 SONIDO</button>
-        <button id="resetBtn" type="button">↻ REINICIAR PRUEBA</button>
-      </aside>
-    </section>
-
-    <div id="complete" class="modal" hidden>
-      <div class="card">
-        <div class="big-stars">★★★</div>
-        <h1>¡Escena completada!</h1>
-        <p>Encontraste todos los objetos de esta prueba.</p>
-        <strong id="finalScore">0 puntos</strong>
-        <button id="playAgain" type="button">JUGAR DE NUEVO</button>
-      </div>
-    </div>
-  </main>
-  <script src="app.js"></script>
-  <script src="game.js"></script>
-</body>
-</html>
+<main class="screen" id="home" aria-label="Pantalla de inicio de Bible Chronicles">
+  <button class="hotspot new" id="newGame" aria-label="Nueva partida">Nueva partida</button>
+  <button class="hotspot continue" id="continueGame" aria-label="Continuar">Continuar</button>
+  <button class="hotspot settings" id="settingsBtn" aria-label="Configuración">Configuración</button>
+  <button class="sound" id="soundBtn" aria-label="Sonido">🔊</button>
+</main>
+<section class="auth" id="createScreen" hidden><div class="cover"></div><div class="side"><div class="card">
+  <div class="brand">BIBLE CHRONICLES</div><h1>Crear cuenta</h1><p class="intro">Registra tu correo y contraseña para guardar tu progreso.</p>
+  <div class="field"><label>NOMBRE DEL JUGADOR</label><input id="newName" autocomplete="name" maxlength="40" placeholder="Tu nombre"></div>
+  <div class="field"><label>CORREO ELECTRÓNICO</label><input id="newEmail" type="email" autocomplete="email" placeholder="tu@correo.com"></div>
+  <div class="field"><label>CONTRASEÑA</label><div class="input-row"><input id="newPassword" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres"><button class="eye" data-toggle="newPassword" aria-label="Mostrar contraseña">◉</button></div></div>
+  <div class="field"><label>CONFIRMAR CONTRASEÑA</label><div class="input-row"><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Repite tu contraseña"><button class="eye" data-toggle="confirmPassword" aria-label="Mostrar contraseña">◉</button></div></div>
+  <button class="primary" id="createBtn">CREAR CUENTA →</button><button class="secondary" data-home>← VOLVER</button><div class="message" id="createMessage" aria-live="polite"></div>
+</div></div></section>
+<section class="auth" id="loginScreen" hidden><div class="cover"></div><div class="side"><div class="card">
+  <div class="brand">BIBLE CHRONICLES</div><h1>Iniciar sesión</h1><p class="intro">Ingresa con el correo y contraseña de tu cuenta.</p>
+  <div class="field"><label>CORREO ELECTRÓNICO</label><input id="loginEmail" type="email" autocomplete="email" placeholder="tu@correo.com"></div>
+  <div class="field"><label>CONTRASEÑA</label><div class="input-row"><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Tu contraseña"><button class="eye" data-toggle="loginPassword" aria-label="Mostrar contraseña">◉</button></div></div>
+  <button class="primary" id="loginBtn">ENTRAR →</button><button class="recover-link" id="recoverBtn">¿Olvidaste tu contraseña?</button><button class="secondary" data-home>← VOLVER</button><div class="message" id="loginMessage" aria-live="polite"></div>
+</div></div></section>
+<section class="ready" id="readyScreen" hidden><div class="card"><div class="brand">BIBLE CHRONICLES V3</div><h1>Sesión lista</h1><p class="intro" id="readyText">Tu cuenta está conectada.</p><button class="primary" id="nextStep">CONTINUAR</button><button class="secondary" id="logoutBtn">CERRAR SESIÓN</button></div></section>
+<section class="settings-panel" id="settingsPanel" hidden><div class="card"><div class="brand">CONFIGURACIÓN</div><h1>Sonido</h1><p class="intro">El ajuste queda guardado en este dispositivo.</p><button class="primary" id="settingsSound">🔊 SONIDO ACTIVADO</button><button class="secondary" data-home>← VOLVER</button></div></section>
+<section class="rotate"><div class="device"></div><h1>Gira el dispositivo</h1><p>Bible Chronicles está diseñado para jugarse en horizontal.</p></section>
+<script src="app.js"></script><script src="player-profile.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const home=$('home'),createScreen=$('createScreen'),loginScreen=$('loginScreen'),readyScreen=$('readyScreen'),settingsPanel=$('settingsPanel');
+function hideAll(){[createScreen,loginScreen,readyScreen,settingsPanel].forEach(x=>x.hidden=true);home.hidden=false}
+function show(screen){home.hidden=true;[createScreen,loginScreen,readyScreen,settingsPanel].forEach(x=>x.hidden=x!==screen)}
+async function immersive(){if(window.BCApp)await BCApp.requestGameFullscreen()}
+function soundLabel(){const on=window.BCApp?BCApp.getSetting('sound',true):true;$('soundBtn').textContent=on?'🔊':'🔇';$('settingsSound').textContent=on?'🔊 SONIDO ACTIVADO':'🔇 SONIDO DESACTIVADO'}
+$('newGame').onclick=()=>{immersive();show(createScreen)};
+$('continueGame').onclick=async()=>{immersive();const p=await BibleChroniclesPlayer.ready();if(p){$('readyText').textContent=(p.name?('Bienvenido, '+p.name+'. '):'')+'Tu sesión continúa activa.';show(readyScreen)}else show(loginScreen)};
+$('settingsBtn').onclick=()=>show(settingsPanel);
+$('soundBtn').onclick=()=>{const v=!BCApp.getSetting('sound',true);BCApp.setSetting('sound',v);soundLabel()};
+$('settingsSound').onclick=()=>{const v=!BCApp.getSetting('sound',true);BCApp.setSetting('sound',v);soundLabel()};
+document.querySelectorAll('[data-home]').forEach(b=>b.onclick=hideAll);
+document.querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>{const i=$(b.dataset.toggle);i.type=i.type==='password'?'text':'password'});
+$('createBtn').onclick=async()=>{const m=$('createMessage');try{if($('newPassword').value!==$('confirmPassword').value){m.textContent='Las contraseñas no coinciden.';return}m.textContent='Creando cuenta...';const p=await BibleChroniclesPlayer.createPlayer($('newName').value,$('newEmail').value,$('newPassword').value);$('readyText').textContent=(p.name?('Bienvenido, '+p.name+'. '):'')+'La cuenta quedó creada en Firebase.';show(readyScreen)}catch(e){m.textContent=e.message}};
+$('loginBtn').onclick=async()=>{const m=$('loginMessage');try{m.textContent='Ingresando...';const p=await BibleChroniclesPlayer.login($('loginEmail').value,$('loginPassword').value);$('readyText').textContent=(p.name?('Bienvenido, '+p.name+'. '):'')+'Sesión iniciada correctamente.';show(readyScreen)}catch(e){m.textContent=e.message}};
+$('recoverBtn').onclick=async()=>{const m=$('loginMessage'),email=$('loginEmail').value;if(!email){m.textContent='Escribe primero tu correo.';return}try{await BibleChroniclesPlayer.recover(email);m.textContent='Si el correo está registrado, recibirás instrucciones de recuperación.'}catch(e){m.textContent=e.message}};
+$('logoutBtn').onclick=async()=>{await BibleChroniclesPlayer.logout();hideAll()};
+$('nextStep').onclick=()=>{$('readyText').textContent='La siguiente etapa será Selección del Viajero. Este acceso ya quedó terminado.'};
+soundLabel();BibleChroniclesPlayer.ready().catch(()=>{});
+</script>
+</body></html>
