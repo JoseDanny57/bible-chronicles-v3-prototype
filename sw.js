@@ -1,4 +1,4 @@
-const CACHE='bible-chronicles-v3-shell-v2';
+const CACHE='bible-chronicles-v3-shell-v3';
 const CORE=['/','/index.html','/styles.css','/app.js','/game.js','/manifest.webmanifest','/icon-v3.svg'];
 
 self.addEventListener('install',event=>{
