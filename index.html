@@ -22,8 +22,8 @@ filter:blur(.7px);mix-blend-mode:screen;animation:flameDance .86s ease-in-out in
 radial-gradient(circle at 48% 52%,rgba(255,236,178,.48) 0%,rgba(255,189,84,.25) 30%,rgba(255,137,42,.08) 55%,transparent 74%);
 filter:blur(4px);mix-blend-mode:screen;animation:skyLightning 6.4s linear infinite}
 .fx-horizon::after{content:'';position:absolute;left:35%;top:12%;width:28%;height:54%;background:linear-gradient(100deg,transparent 42%,rgba(255,247,211,.7) 49%,rgba(255,255,255,.9) 51%,rgba(255,235,175,.30) 55%,transparent 62%);filter:blur(5px);opacity:0;transform:rotate(-10deg);animation:boltFlash 6.4s linear infinite}
-.fx-compass{left:63.2%;top:65.0%;width:18.6%;height:22.8%;overflow:hidden;border-radius:50%;mix-blend-mode:screen;clip-path:ellipse(48% 45% at 50% 50%)}
-.fx-compass::after{content:'';position:absolute;left:-52%;top:-18%;width:30%;height:136%;background:linear-gradient(105deg,transparent 20%,rgba(255,244,205,.12) 36%,rgba(255,255,244,.64) 49%,rgba(255,247,218,.22) 63%,transparent 80%);filter:blur(1.6px);transform:rotate(7deg);animation:compassGlassSweep 13.5s ease-in-out infinite}
+.fx-compass{left:64.0%;top:66.0%;width:16.8%;height:20.4%;overflow:hidden;border-radius:50%;mix-blend-mode:screen;clip-path:ellipse(46% 43% at 50% 50%)}
+.fx-compass::after{content:'';position:absolute;left:-24%;top:-10%;width:12%;height:120%;background:linear-gradient(105deg,transparent 18%,rgba(255,244,205,.10) 40%,rgba(255,255,244,.58) 50%,rgba(255,247,218,.18) 60%,transparent 82%);filter:blur(.7px);transform:rotate(7deg);animation:compassGlassSweep 3.1s linear infinite}
 @keyframes flameDance{
   0%{opacity:.72;transform:translate(-2%,1%) rotate(-3deg) scale(.90,1.02);border-radius:52% 48% 58% 42%}
   25%{opacity:1;transform:translate(1%,-2%) rotate(2deg) scale(1.04,1.15);border-radius:46% 54% 43% 57%}
@@ -53,11 +53,11 @@ filter:blur(4px);mix-blend-mode:screen;animation:skyLightning 6.4s linear infini
   74.7%{opacity:.08}
 }
 @keyframes compassGlassSweep{
-  0%,58%{left:-55%;opacity:0}
-  63%{opacity:.28}
-  72%{opacity:.8}
-  86%{left:120%;opacity:.38}
-  91%,100%{left:120%;opacity:0}
+  0%,10%{left:-24%;opacity:0}
+  14%{opacity:.24}
+  24%{opacity:.68}
+  72%{left:112%;opacity:.36}
+  78%,100%{left:112%;opacity:0}
 }
 .hotspot.tapflash{animation:tapFlash .22s ease-out}
 @keyframes tapFlash{0%{box-shadow:0 0 0 rgba(255,220,130,0)}50%{box-shadow:0 0 28px rgba(255,220,130,.75),inset 0 0 18px rgba(255,240,190,.35)}100%{box-shadow:0 0 0 rgba(255,220,130,0)}}
