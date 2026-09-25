@@ -1,13 +1,33 @@
 {
-  "name": "Bible Chronicles",
-  "short_name": "Bible Chronicles",
-  "description": "Aventura bíblica interactiva",
-  "start_url": "/",
+  "name": "Bible Chronicles V3",
+  "short_name": "Bible Chronicles V3",
+  "id": "/bc-v3",
+  "description": "Aventura bíblica interactiva — versión 3",
+  "start_url": "/?pwa=v3",
   "scope": "/",
   "display": "fullscreen",
-  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "display_override": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "landscape",
   "background_color": "#07111b",
   "theme_color": "#07131e",
-  "lang": "es"
+  "lang": "es",
+  "icons": [
+    {
+      "src": "https://bible-chronicles-v2.vercel.app/icon-v2-biblia-brujula.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://bible-chronicles-v2.vercel.app/icon-v2-biblia-brujula.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "prefer_related_applications": false
 }
