@@ -1,5 +1,5 @@
-const CACHE='bible-chronicles-v3-shell-v1';
-const CORE=['/','/index.html','/styles.css','/app.js','/game.js','/manifest.webmanifest'];
+const CACHE='bible-chronicles-v3-shell-v2';
+const CORE=['/','/index.html','/styles.css','/app.js','/game.js','/manifest.webmanifest','/icon-v3.svg'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
